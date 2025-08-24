@@ -1,5 +1,6 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const { requireAnalystOrAdmin } = require('../middleware/blockchainAuth');
 
 const router = express.Router();
 
@@ -41,7 +42,7 @@ const events = [
 let orders = [];
 const usedIdempotencyKeys = new Set();
 
-router.post('/', auth, checkRole, (req, res) => {
+router.post('/', auth, requireAnalystOrAdmin, (req, res) => {
   try {
     const { eventId, side, stake, idempotencyKey, signature } = req.body;
 
@@ -94,6 +95,8 @@ router.post('/', auth, checkRole, (req, res) => {
     const order = {
       id: Date.now().toString(),
       userId: req.user.sub,
+      userAddress: req.userAddress,
+      blockchainRole: req.blockchainRoleString,
       eventId,
       side,
       stake,

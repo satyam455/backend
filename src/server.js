@@ -6,6 +6,7 @@ const authRoutes = require('./routes/auth');
 const eventsRoutes = require('./routes/events');
 const orderRoutes = require('./routes/orders');
 const leaderboardRoutes = require('./routes/leaderboard');
+const roleRoutes = require('./routes/role');
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use('/auth', authRoutes);
 app.use('/events', eventsRoutes);
 app.use('/orders', orderRoutes);
 app.use('/leaderboard', leaderboardRoutes);
+app.use('/role', roleRoutes);
 
 app.get('/', (req, res) => {
   res.json({ message: 'VaultBoard API is running' });
